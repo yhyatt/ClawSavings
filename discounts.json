@@ -1,0 +1,440 @@
+{
+  "version": "1.0.0",
+  "last_reviewed": "2026-03-06",
+  "sources": {
+    "htzone_card": {
+      "name": "HiTech Zone Cal Card",
+      "name_he": "כרטיס הייטקזון כאל",
+      "url": "https://www.htzone.co.il/כרטיס_אשראי",
+      "login_required": true,
+      "description": "כרטיס אשראי Visa Cal למועדון הייטקזון. הנחות אוטומטיות במעמד החיוב."
+    },
+    "htzone_club": {
+      "name": "HiTech Zone Club",
+      "name_he": "מועדון הייטקזון",
+      "url": "https://www.htzone.co.il",
+      "login_required": true,
+      "description": "מועדון צרכנות לעובדי הייטק. שוברים מוזלים ל-500+ עסקים."
+    },
+    "htzone_pro2": {
+      "name": "HiTech Zone PRO²",
+      "name_he": "הייטקזון PRO²",
+      "url": "https://www.htzone.co.il/pro2",
+      "login_required": true,
+      "description": "מסלול פרימיום - עד 15% קאשבק, גישה כפולה לשוברים, PRO² Shop עד 50% הנחה."
+    },
+    "poalim_wonder": {
+      "name": "Poalim Wonder",
+      "name_he": "פועלים וונדר",
+      "url": "https://www.bankhapoalim.co.il/he/Poalim-Wonder",
+      "login_required": true,
+      "description": "תוכנית נאמנות בנק הפועלים. נקודות → שוברים מוזלים. דורש הרשמה (חינם)."
+    },
+    "max_card": {
+      "name": "Max Card",
+      "name_he": "מקס (לאומי קארד)",
+      "url": "https://www.max.co.il",
+      "login_required": true,
+      "description": "כרטיס מקס (לשעבר לאומי קארד). שותפויות עם מועדונים שונים."
+    },
+    "isracard": {
+      "name": "Isracard",
+      "name_he": "ישראכרט",
+      "url": "https://www.isracard.co.il",
+      "login_required": true,
+      "description": "ישראכרט - הטבות מגוונות לפי מסלול."
+    },
+    "gov_xml": {
+      "name": "Gov Price Transparency",
+      "name_he": "שקיפות מחירים ממשלתית",
+      "url": "https://github.com/OpenIsraeliSupermarkets/israeli-supermarket-scarpers",
+      "login_required": false,
+      "description": "קבצי XML יומיים של כל המחירים בסופרים - חובה חוקית. קוד פתוח לסריקה."
+    }
+  },
+  "categories": {
+    "supermarkets": {
+      "he": "רשתות מזון",
+      "stores": [
+        {"name": "Shufersal", "he": "שופרסל"},
+        {"name": "Rami Levy", "he": "רמי לוי"},
+        {"name": "Victory", "he": "ויקטורי"},
+        {"name": "Carrefour", "he": "קרפור"},
+        {"name": "Mega", "he": "מגה"},
+        {"name": "Yeinot Bitan", "he": "יינות ביתן"},
+        {"name": "Shuk HaIr", "he": "שוק העיר"},
+        {"name": "Osher Ad", "he": "אושר עד"},
+        {"name": "Tiv Taam", "he": "טיב טעם"},
+        {"name": "AM:PM", "he": "AM:PM"},
+        {"name": "Yellow", "he": "יילו"}
+      ],
+      "sources": {
+        "htzone_card": {
+          "type": "pos_discount",
+          "max_pct": 20,
+          "notes": "הטבה אוטומטית במעמד חיוב. עד 20% ברשתות מזון נבחרות.",
+          "stores_covered": ["שופרסל", "רמי לוי", "ויקטורי", "יינות ביתן"]
+        },
+        "htzone_club": {
+          "type": "voucher",
+          "max_pct": 20,
+          "voucher_url": "https://www.htzone.co.il/sale/1147",
+          "notes": "שוברים מוזלים לרכישה באתר",
+          "deals": [],
+          "cached_at": null
+        },
+        "poalim_wonder": {
+          "type": "voucher",
+          "notes": "שוברים + נקודות בונוס",
+          "deals": [
+            {"store": "שוק העיר", "store_en": "Shuk HaIr", "face_value": 300, "price": 255, "extra_points": 0, "effective_pct": 15.0},
+            {"store": "ויקטורי", "store_en": "Victory", "face_value": 300, "price": 259, "extra_points": 50, "effective_pct": 13.7},
+            {"store": "קרפור", "store_en": "Carrefour", "face_value": 300, "price": 259, "extra_points": 50, "effective_pct": 13.7},
+            {"store": "רמי לוי", "store_en": "Rami Levy", "face_value": 600, "price": 575, "extra_points": 0, "effective_pct": 4.2}
+          ],
+          "cached_at": "2026-03-06"
+        },
+        "gov_xml": {
+          "type": "price_comparison",
+          "notes": "השוואת מחירים מלאה לפי מוצר. סריקת קבצי XML יומיים.",
+          "scraper_repo": "https://github.com/OpenIsraeliSupermarkets/israeli-supermarket-scarpers"
+        }
+      }
+    },
+    "restaurants": {
+      "he": "מסעדות ובתי קפה",
+      "stores": [
+        {"name": "Aroma", "he": "ארומה"},
+        {"name": "Cafe Cafe", "he": "קפה קפה"},
+        {"name": "Cafe Landwer", "he": "קפה לנדוור"},
+        {"name": "Arcaffe", "he": "ארקפה"},
+        {"name": "Cafe Greg", "he": "קפה גרג"},
+        {"name": "Japanika", "he": "ג'פניקה"},
+        {"name": "BBB", "he": "בורגרס בר"},
+        {"name": "Moses", "he": "מוזס"},
+        {"name": "Shipudei HaTikva", "he": "שיפודי התקווה"}
+      ],
+      "sources": {
+        "htzone_card": {
+          "type": "pos_discount",
+          "max_pct": 15,
+          "notes": "הנחות במסעדות נבחרות במעמד החיוב"
+        },
+        "htzone_club": {
+          "type": "voucher",
+          "max_pct": 20,
+          "voucher_url": "https://www.htzone.co.il/sale/1148",
+          "deals": [],
+          "cached_at": null
+        }
+      }
+    },
+    "delivery": {
+      "he": "משלוחי אוכל",
+      "stores": [
+        {"name": "Wolt", "he": "וולט"},
+        {"name": "10bis", "he": "תן ביס"},
+        {"name": "Cibus", "he": "סיבוס"}
+      ],
+      "sources": {
+        "poalim_wonder": {
+          "type": "voucher",
+          "deals": [
+            {"store": "וולט", "store_en": "Wolt", "face_value": 100, "price": 80, "extra_points": 25, "effective_pct": 20.0}
+          ],
+          "cached_at": "2026-03-06"
+        },
+        "htzone_club": {
+          "type": "voucher",
+          "max_pct": 15,
+          "deals": [],
+          "cached_at": null
+        }
+      }
+    },
+    "pharma": {
+      "he": "בתי מרקחת ופארם",
+      "stores": [
+        {"name": "Super-Pharm", "he": "סופר-פארם"},
+        {"name": "Be", "he": "Be פארם"},
+        {"name": "NewPharm", "he": "ניופארם"},
+        {"name": "GoodPharm", "he": "גודפארם"}
+      ],
+      "sources": {
+        "htzone_card": {
+          "type": "pos_discount",
+          "max_pct": 20,
+          "notes": "עד 20% בסופר-פארם ורשתות פארם נוספות",
+          "stores_covered": ["סופר-פארם", "Be פארם"]
+        },
+        "htzone_club": {
+          "type": "voucher",
+          "max_pct": 15,
+          "voucher_url": "https://www.htzone.co.il/sale/1152",
+          "deals": [],
+          "cached_at": null
+        }
+      }
+    },
+    "fashion": {
+      "he": "אופנה והנעלה",
+      "stores": [
+        {"name": "Castro", "he": "קסטרו"},
+        {"name": "Fox", "he": "פוקס"},
+        {"name": "Golf", "he": "גולף"},
+        {"name": "Renuar", "he": "רנואר"},
+        {"name": "Honigman", "he": "הוניגמן"},
+        {"name": "Zara", "he": "זארה"},
+        {"name": "H&M", "he": "H&M"},
+        {"name": "Hamashbir", "he": "המשביר"},
+        {"name": "Scoop", "he": "סקופ"}
+      ],
+      "sources": {
+        "htzone_card": {
+          "type": "pos_discount",
+          "max_pct": 15,
+          "notes": "הנחות ברשתות אופנה נבחרות"
+        },
+        "htzone_club": {
+          "type": "voucher",
+          "max_pct": 20,
+          "voucher_url": "https://www.htzone.co.il/sale/1150",
+          "deals": [],
+          "cached_at": null
+        }
+      }
+    },
+    "electronics": {
+      "he": "חשמל ואלקטרוניקה",
+      "stores": [
+        {"name": "KSP", "he": "KSP"},
+        {"name": "Bug", "he": "באג"},
+        {"name": "Ivory", "he": "איווורי"},
+        {"name": "Machsanei Hashmal", "he": "מחסני חשמל"},
+        {"name": "Electra", "he": "אלקטרה"},
+        {"name": "iDigital", "he": "איידיגיטל"}
+      ],
+      "sources": {
+        "htzone_club": {
+          "type": "voucher",
+          "max_pct": 10,
+          "voucher_url": "https://www.htzone.co.il/sale/1153",
+          "deals": [],
+          "cached_at": null
+        },
+        "htzone_pro2": {
+          "type": "cashback",
+          "max_pct": 15,
+          "notes": "קאשבק על רכישות באתר htzone.co.il"
+        }
+      }
+    },
+    "entertainment": {
+      "he": "בילויים ופנאי",
+      "stores": [
+        {"name": "Yes Planet", "he": "יס פלאנט"},
+        {"name": "Cinema City", "he": "סינמה סיטי"},
+        {"name": "Hot Cinema", "he": "הוט סינמה"},
+        {"name": "Planet", "he": "פלאנט"},
+        {"name": "Lev Cinema", "he": "לב סינמה"},
+        {"name": "Comedy Bar", "he": "קומדי בר"},
+        {"name": "Holmes Place", "he": "הולמס פלייס"}
+      ],
+      "sources": {
+        "poalim_wonder": {
+          "type": "voucher",
+          "deals": [
+            {"store": "פלאנט סינמה", "store_en": "Planet Cinema", "description": "2 כרטיסים", "price": 45, "extra_points": 25, "notes": "זוג כרטיסים"}
+          ],
+          "cached_at": "2026-03-06"
+        },
+        "htzone_club": {
+          "type": "voucher",
+          "max_pct": 30,
+          "voucher_url": "https://www.htzone.co.il/sale/1149",
+          "deals": [],
+          "cached_at": null,
+          "notes": "שוברים לקולנוע, ספא, הופעות"
+        }
+      }
+    },
+    "travel": {
+      "he": "תיירות ונופש",
+      "stores": [
+        {"name": "Issta", "he": "איסתא"},
+        {"name": "Eshet Tours", "he": "אשת טורס"},
+        {"name": "Booking.com", "he": "בוקינג"},
+        {"name": "Fattal Hotels", "he": "מלונות פתאל"},
+        {"name": "Dan Hotels", "he": "מלונות דן"}
+      ],
+      "sources": {
+        "htzone_club": {
+          "type": "deals",
+          "max_pct": 25,
+          "url": "https://www.htzone.co.il/tripzone",
+          "notes": "TripZone - דילים לטיסות, מלונות, חבילות נופש",
+          "deals": [],
+          "cached_at": null
+        }
+      }
+    },
+    "home_renovation": {
+      "he": "ריהוט ושיפוצים",
+      "stores": [
+        {"name": "IKEA", "he": "איקאה"},
+        {"name": "Ace", "he": "אייס"},
+        {"name": "Home Center", "he": "הום סנטר"},
+        {"name": "Keter", "he": "כתר"}
+      ],
+      "sources": {
+        "htzone_club": {
+          "type": "voucher",
+          "max_pct": 15,
+          "voucher_url": "https://www.htzone.co.il/sale/1154",
+          "deals": [],
+          "cached_at": null
+        }
+      }
+    },
+    "gym_sports": {
+      "he": "כושר וספורט",
+      "stores": [
+        {"name": "Holmes Place", "he": "הולמס פלייס"},
+        {"name": "Sport Club", "he": "ספורט קלאב"},
+        {"name": "Gordon Pool", "he": "בריכת גורדון"},
+        {"name": "Decathlon", "he": "דקטלון"}
+      ],
+      "sources": {
+        "htzone_club": {
+          "type": "voucher",
+          "max_pct": 20,
+          "voucher_url": "https://www.htzone.co.il/sale/1155",
+          "deals": [],
+          "cached_at": null
+        }
+      }
+    },
+    "fuel": {
+      "he": "דלק",
+      "stores": [
+        {"name": "Paz", "he": "פז"},
+        {"name": "Sonol", "he": "סונול"},
+        {"name": "Delek", "he": "דלק"},
+        {"name": "Ten", "he": "טן"}
+      ],
+      "sources": {
+        "htzone_card": {
+          "type": "pos_discount",
+          "max_pct": 5,
+          "notes": "הנחה קטנה בתחנות דלק נבחרות"
+        }
+      }
+    },
+    "kids_baby": {
+      "he": "ילדים ותינוקות",
+      "stores": [
+        {"name": "Shilav", "he": "שילב"},
+        {"name": "Toys R Us", "he": "טויס אר אס"},
+        {"name": "Kfar HaSha'ashuim", "he": "כפר השעשועים"},
+        {"name": "Baby Land", "he": "בייבילנד"}
+      ],
+      "sources": {
+        "htzone_club": {
+          "type": "voucher",
+          "max_pct": 15,
+          "voucher_url": "https://www.htzone.co.il/sale/1156",
+          "deals": [],
+          "cached_at": null
+        }
+      }
+    },
+    "specialty_food": {
+      "he": "אוכל מיוחד",
+      "stores": [
+        {"name": "Kamaat Taamim", "he": "כמעט טעמים"},
+        {"name": "Mahane Yehuda", "he": "מחנה יהודה"},
+        {"name": "Tiv Taam", "he": "טיב טעם"}
+      ],
+      "sources": {
+        "poalim_wonder": {
+          "type": "voucher",
+          "deals": [
+            {"store": "כמעט טעמים", "store_en": "Kamaat Taamim", "face_value": 200, "price": 175, "extra_points": 50, "effective_pct": 12.5}
+          ],
+          "cached_at": "2026-03-06"
+        }
+      }
+    }
+  },
+  "quick_lookup": {
+    "store_to_category": {
+      "שופרסל": "supermarkets",
+      "רמי לוי": "supermarkets",
+      "ויקטורי": "supermarkets",
+      "קרפור": "supermarkets",
+      "מגה": "supermarkets",
+      "יינות ביתן": "supermarkets",
+      "שוק העיר": "supermarkets",
+      "אושר עד": "supermarkets",
+      "טיב טעם": "supermarkets",
+      "AM:PM": "supermarkets",
+      "יילו": "supermarkets",
+      "ארומה": "restaurants",
+      "קפה קפה": "restaurants",
+      "קפה לנדוור": "restaurants",
+      "וולט": "delivery",
+      "תן ביס": "delivery",
+      "סיבוס": "delivery",
+      "סופר-פארם": "pharma",
+      "ניופארם": "pharma",
+      "גודפארם": "pharma",
+      "Be פארם": "pharma",
+      "קסטרו": "fashion",
+      "פוקס": "fashion",
+      "גולף": "fashion",
+      "רנואר": "fashion",
+      "זארה": "fashion",
+      "המשביר": "fashion",
+      "KSP": "electronics",
+      "באג": "electronics",
+      "איווורי": "electronics",
+      "מחסני חשמל": "electronics",
+      "יס פלאנט": "entertainment",
+      "סינמה סיטי": "entertainment",
+      "הוט סינמה": "entertainment",
+      "פלאנט": "entertainment",
+      "איסתא": "travel",
+      "בוקינג": "travel",
+      "איקאה": "home_renovation",
+      "אייס": "home_renovation",
+      "הום סנטר": "home_renovation",
+      "הולמס פלייס": "gym_sports",
+      "דקטלון": "gym_sports",
+      "פז": "fuel",
+      "סונול": "fuel",
+      "דלק": "fuel",
+      "שילב": "kids_baby",
+      "טויס אר אס": "kids_baby",
+      "כמעט טעמים": "specialty_food"
+    },
+    "best_sources_by_category": {
+      "supermarkets": ["poalim_wonder", "htzone_card", "gov_xml"],
+      "restaurants": ["htzone_card", "htzone_club"],
+      "delivery": ["poalim_wonder", "htzone_club"],
+      "pharma": ["htzone_card", "htzone_club"],
+      "fashion": ["htzone_club", "htzone_card"],
+      "electronics": ["htzone_pro2", "htzone_club"],
+      "entertainment": ["htzone_club", "poalim_wonder"],
+      "travel": ["htzone_club"],
+      "home_renovation": ["htzone_club"],
+      "gym_sports": ["htzone_club"],
+      "fuel": ["htzone_card"],
+      "kids_baby": ["htzone_club"],
+      "specialty_food": ["poalim_wonder"]
+    }
+  },
+  "meta": {
+    "cache_ttl_days": 30,
+    "notes": "Deal layer (specific voucher prices) should be refreshed when cached_at is null or >30 days old. Structural layer (which source covers which category) is near-static — update manually when benefits change (quarterly)."
+  }
+}
