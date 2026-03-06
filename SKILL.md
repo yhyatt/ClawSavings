@@ -1,180 +1,187 @@
 # ClawSavings — Israeli Discounts & Price Comparison
 
+> **USP:** Knows which Israeli card saves you most at any store — 72 stores, 24 verified deals, one answer.
+
+---
+
 ## When to Use This Skill
 
 Activate when the user asks about:
-- **Saving money** on purchases in Israel
-- **Best card/club** to use at a specific store
-- **Cheapest place** to buy a product
+- **Best card/club** to use at a specific store ("באיזה כרטיס לויקטורי?")
 - **Discounts, vouchers, deals** for Israeli stores
-- **Price comparison** across supermarkets
-- Questions in Hebrew like: "איפה הכי זול", "באיזה כרטיס כדאי", "איפה יש הנחה"
+- **Saving money** on purchases in Israel
+- **Cheapest place** to buy a product ("איפה הכי זול?")
+- Keywords: "הנחה", "חיסכון", "כרטיס", "מועדון", "שובר", "זול"
 
-## Knowledge Base
+---
 
-Read the KB from: `~/.openclaw/workspace/skills/clawsavings/discounts.json`
+## Loading the Knowledge Base — LOAD ONLY WHAT YOU NEED
 
-### Schema Overview
+The full `discounts.json` is ~20KB. **Do not load the whole file.**  
+Instead, use targeted extraction to keep token cost minimal.
 
+### Step 1 — Identify the category (always first)
+
+```bash
+python3 -c "
+import json
+d = json.load(open('~/.openclaw/workspace/skills/clawsavings/discounts.json'))
+store = 'שם_החנות'  # replace with the queried store
+cat = d['quick_lookup']['store_to_category'].get(store)
+best = d['quick_lookup']['best_sources_by_category'].get(cat, [])
+print('category:', cat)
+print('best_sources:', best)
+"
 ```
-discounts.json
-├── sources        — all discount sources (htzone, poalim_wonder, etc.)
-├── categories     — organized by type (supermarkets, pharma, fashion, etc.)
-│   └── [category]
-│       ├── he           — Hebrew name
-│       ├── stores       — list of stores in this category
-│       └── sources      — which discount sources apply
-│           └── [source_id]
-│               ├── type         — pos_discount / voucher / cashback / price_comparison
-│               ├── max_pct      — max percentage off (structural layer)
-│               ├── deals        — specific voucher prices (deal layer)
-│               └── cached_at    — when deals were last refreshed
-├── quick_lookup
-│   ├── store_to_category     — map store name → category
-│   └── best_sources_by_category — ranked sources per category
-└── meta
-    └── cache_ttl_days        — 30 days
+
+Cost: reads only `quick_lookup` — ~200 tokens total.
+
+### Step 2 — Load just that category + source metadata
+
+```bash
+python3 -c "
+import json
+d = json.load(open('~/.openclaw/workspace/skills/clawsavings/discounts.json'))
+cat = 'supermarkets'  # from step 1
+out = {
+    'category_data': d['categories'][cat],
+    'sources_meta': {k: d['sources'][k] for k in d['quick_lookup']['best_sources_by_category'][cat]},
+    'cache_ttl_days': d['meta']['cache_ttl_days']
+}
+import sys; json.dump(out, sys.stdout, ensure_ascii=False, indent=2)
+" 2>/dev/null
 ```
+
+Cost: ~800–1,200 tokens (one category) vs ~5,000 (full file).  
+**Savings: ~75% fewer tokens per query.**
+
+### When the store is not in quick_lookup
+
+Load only `quick_lookup.store_to_category` and tell the user the store isn't indexed yet, offer to check the HTZone or Poalim Wonder site.
+
+---
 
 ## Decision Logic
 
-### Question: "Which card/club should I use at store X?"
+### "Which card/club should I use at store X?"
 
-1. Look up store in `quick_lookup.store_to_category`
-2. Get category's `sources` 
-3. For each source, check:
-   - `type` — is it POS discount (automatic) or voucher (need to buy)?
-   - `max_pct` — what's the maximum savings?
-   - `deals` — any specific current deals?
-4. Rank by effective savings percentage
-5. Return top options with practical notes
+1. Extract category via Step 1 above
+2. Load category section via Step 2
+3. For each source in `best_sources_by_category[category]`:
+   - Check `type`: `pos_discount` = automatic at checkout · `voucher` = buy in advance · `cashback` = retroactive
+   - Check `deals[]` and `cached_at` — is the deal data fresh? (TTL = 30 days)
+   - Use `max_pct` as fallback if deals are empty/stale
+4. Rank by `effective_pct` (deals) or `max_pct` (structural)
+5. Answer concisely in Hebrew
 
-**Example response:**
+**Response template:**
 ```
-לויקטורי יש כמה אופציות:
-1. **פועלים וונדר** — שובר ₪300 ב-₪259 + 50 נקודות (~13.7% הנחה)
-2. **כרטיס הייטקזון** — עד 20% אוטומטית במעמד החיוב
-3. **שוברים הייטקזון** — צריך לבדוק מחיר עדכני באתר
-```
+ל[חנות]:
 
-### Question: "Where's cheapest for product X?"
+1. **[מקור]** — [עסקה ספציפית או % מקסימום]
+2. **[מקור]** — [עסקה ספציפית או % מקסימום]
 
-For **supermarket products**:
-1. Note that gov XML data is the authoritative source
-2. Point to the scraper: `https://github.com/OpenIsraeliSupermarkets/israeli-supermarket-scarpers`
-3. Provide general knowledge ranking:
-   - **Cheapest overall:** רמי לוי, אושר עד
-   - **Good value:** ויקטורי, יינות ביתן  
-   - **Premium pricing:** שופרסל דיל, AM:PM
-   - **Depends on item:** הכי חשוב להשוות מחירים ספציפיים
-
-**Example response:**
-```
-באופן כללי, רמי לוי ואושר עד הכי זולים לסל קניות רגיל.
-לבדיקה מדויקת של מוצר ספציפי — אפשר להשתמש בסורק מחירי הממשלה: 
-https://github.com/OpenIsraeliSupermarkets/israeli-supermarket-scarpers
-
-אם יש לך כרטיס הייטקזון או פועלים וונדר, שווה לשלב עם שוברים.
+💡 [טיפ מעשי אחד]
 ```
 
-### Question: General "how to save money on X"
+### "Where's cheapest for product X?"
 
-1. Identify category
-2. List all applicable sources from `best_sources_by_category`
-3. Explain each option briefly
-4. Recommend the best combination
+General supermarket ranking (baked-in knowledge, no lookup needed):
+- **Cheapest:** רמי לוי, אושר עד
+- **Good value:** ויקטורי, יינות ביתן
+- **Mid-range:** שופרסל, מגה
+- **Expensive:** AM:PM, שופרסל אקספרס
 
-## Cache Refresh Logic
+For exact product prices → government XML (point to scraper, don't run it):
+`https://github.com/OpenIsraeliSupermarkets/israeli-supermarket-scarpers`
 
-When `cached_at` is `null` or older than 30 days:
+### "How do I save most on X category?"
 
-1. **Do NOT block the response** — answer with structural data (max_pct)
-2. Note that specific deal prices may be stale
-3. If user needs exact voucher prices:
-   - Use browser tool to check the source URL
-   - Parse current deals
-   - Update `deals` array and `cached_at` in discounts.json
-   - Save the updated JSON
+Load category → list all sources → explain the best combo (e.g. "buy a Poalim Wonder voucher AND pay with HTZone card if you have both").
 
-### Refresh URLs by Source
+---
 
-| Source | URL to Check |
-|--------|--------------|
-| htzone_club | `https://www.htzone.co.il/sale/{category_id}` |
-| poalim_wonder | `https://www.bankhapoalim.co.il/he/Poalim-Wonder` |
+## Cache Refresh (On-Demand)
 
-**Note:** Both require login. If browser can't access, note that login is required and suggest user check manually.
+**When to refresh:** `cached_at` is `null` OR more than 30 days old AND user needs exact deal price.
+
+**How:**
+1. Answer immediately using structural data (`max_pct`) — don't block the response
+2. Note: "המחיר המדויק דורש בדיקה" 
+3. If user confirms they want live price → use browser to fetch source URL
+4. Parse deal rows → update `deals[]` + `cached_at` in discounts.json → save
+
+**Refresh URLs (verified):**
+| Source | URL |
+|--------|-----|
+| `poalim_wonder` | `https://www.bankhapoalim.co.il/he/Poalim-Wonder` + `/Shopping` sub-page |
+| `htzone_club` | `https://www.htzone.co.il/sale/1147` (requires login + JS render) |
+| `htzone_pos` | `https://www.htzone.co.il/sale/62` (requires login + JS render) |
+
+**Model for cache refresh:**
+- Simple pages (Poalim Wonder — no login required) → current model is sufficient
+- HTZone pages (login + JS required) → browser automation with logged-in session needed; if not available, respond with structural data only and note the limitation
+
+**Update the file after refresh:**
+```bash
+python3 -c "
+import json
+path = '~/.openclaw/workspace/skills/clawsavings/discounts.json'
+d = json.load(open(path))
+from datetime import date
+d['categories']['CATEGORY']['sources']['SOURCE']['deals'] = [/* new deals */]
+d['categories']['CATEGORY']['sources']['SOURCE']['cached_at'] = str(date.today())
+json.dump(d, open(path,'w'), ensure_ascii=False, indent=2)
+print('updated')
+"
+```
+
+---
 
 ## Output Format
 
-- **Language:** Hebrew preferred (users in WhatsApp group speak Hebrew)
-- **Tone:** Helpful, practical, no fluff
-- **Format:** Concise bullet points, ranked by savings
-- **Include:** Specific numbers when available (₪300 → ₪259)
-- **Don't include:** Long explanations, marketing fluff
+- **Language:** Hebrew (group speaks Hebrew)
+- **Tone:** Short, practical, no fluff
+- **Numbers:** Always show exact ₪ amounts when available (₪300 → ₪259)
+- **POS vs Voucher:** Always clarify — automatic at checkout vs. buy in advance
+- **Max length:** 5 lines unless multiple options worth listing
 
-### Template
-
-```
-[Store/Category question]:
-
-הכי כדאי:
-1. **[Source]** — [specific deal or max %]
-2. **[Source]** — [specific deal or max %]
-
-💡 [One practical tip if relevant]
-```
+---
 
 ## Examples
 
-### User: "באיזה כרטיס כדאי לסופר-פארם?"
-
+**"באיזה כרטיס כדאי בויקטורי?"**
 ```
-לסופר-פארם:
+לויקטורי:
+1. **פועלים וונדר** — שובר ₪300 ב-₪259 + 50 נקודות (13.7%)
+2. **כרטיס הייטקזון** — עד 20% אוטומטית בקופה
 
-1. **כרטיס הייטקזון** — עד 20% אוטומטית בקופה
-2. **שוברים הייטקזון** — צריך לבדוק מחיר עדכני
-
-💡 אם יש לך כרטיס הייטקזון, פשוט תשלם איתו — ההנחה אוטומטית
+💡 אם יש לך את שניהם — קנה שובר וונדר ושלם איתו עם כרטיס הייטקזון
 ```
 
-### User: "איפה הכי זול לקנות חלב?"
-
+**"יש הנחה לוולט?"**
 ```
-באופן כללי:
-- **רמי לוי / אושר עד** — הכי זולים
-- **ויקטורי / יינות ביתן** — מחירים סבירים
-- **שופרסל / AM:PM** — יקרים יותר
-
-לבדיקה מדויקת של מוצר ספציפי יש סורק מחירים ממשלתי (קוד פתוח).
-
-💡 אם קונים בכמויות, שווה לשלב עם שובר מפועלים וונדר
+וולט — פועלים וונדר: שובר ₪100 ב-₪80 + 25 נקודות (20% 🔥)
 ```
 
-### User: "יש הנחות לוולט?"
-
+**"איפה הכי זול לקנות?"**
 ```
-לוולט:
-
-**פועלים וונדר** — שובר ₪100 ב-₪80 + 25 נקודות (20% הנחה!)
-
-💡 זה הדיל הכי טוב שיש כרגע למשלוחים
+לסל קניות רגיל: רמי לוי / אושר עד הכי זולים.
+אם יש לך פועלים וונדר — שובר רמי לוי ₪700 ב-₪620 (11.4%).
 ```
+
+---
 
 ## Maintenance
 
-### Quarterly Review
-- Check if htzone/poalim benefits changed
-- Update `max_pct` values in structural layer
-- Update `last_reviewed` in JSON root
+**Quarterly (structural layer):** Check if HTZone/Poalim benefits structure changed → update `max_pct` → update `last_reviewed`
 
-### On-Demand Refresh
-- When user asks for specific voucher price and cache is stale
-- Browser automation to scrape current deals
-- Update `deals` array + `cached_at`
+**On-demand (deal layer):** Refresh only when user asks + cache is stale → update `deals[]` + `cached_at`
+
+---
 
 ## Limitations
 
-1. **Login-required sources:** Can't auto-refresh htzone/poalim without credentials
-2. **Gov XML integration:** Not yet implemented — point to scraper repo
-3. **Real-time prices:** Voucher prices change; always note when data is stale
+1. HTZone specific deals require login + JS render — structural max_pct used as fallback
+2. Gov XML price comparison not yet wired — reference only
+3. Max / Isracard deals not yet researched
