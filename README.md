@@ -1,27 +1,47 @@
-# ClawSavings 💰
+![ClawSavings](./header.jpg)
 
-Israeli discounts and price comparison skill for [OpenClaw](https://openclaw.dev).
+# clawsavings
 
-Answers two questions:
-1. **"Where's cheapest for product X?"** — via Israeli supermarket price data
-2. **"Which card/club should I use at store Y?"** — via structured discount knowledge base
+An Israeli consumer discount skill that maps any store to its best card, club, or voucher deal — covering HTZone, Poalim Wonder, and government price data across 72 stores and 14 categories.
 
-## Features
+Part of the [OpenClaw](https://github.com/openclaw) skill ecosystem.
 
-- 📊 **Discount KB** — which card/club gives the best deal at each store
-- 🏪 **12+ categories** — supermarkets, pharma, fashion, electronics, entertainment, and more
-- 🇮🇱 **Hebrew-first** — designed for Israeli users (WhatsApp groups, Telegram)
-- 🔄 **Cache-aware** — serves fast from cache, refreshes stale data on-demand
+## What It Does
+
+- **"Which card should I use at Victory?"** → ranked list of best deals with exact ₪ amounts
+- **"Where's cheapest for milk?"** → supermarket ranking + gov price data reference
+- **"Any Wolt discounts?"** → live voucher prices from verified sources
+
+Hebrew-first. Designed for WhatsApp and Telegram group agents.
 
 ## Discount Sources
 
-| Source | Type | Login Required |
-|--------|------|----------------|
-| **HiTech Zone Card** | POS discount (up to 20%) | ✅ |
-| **HiTech Zone Club** | Vouchers | ✅ |
-| **HiTech Zone PRO²** | Cashback (up to 15%) | ✅ |
-| **Poalim Wonder** | Vouchers + points | ✅ |
-| **Gov Price Transparency** | Full price comparison | ❌ |
+| Source | Type | Coverage | Auth Required |
+|--------|------|----------|---------------|
+| **HiTech Zone Card** (כאל) | POS discount at checkout | Food chains, pharma, restaurants, fashion, travel | Card required |
+| **HiTech Zone Club** | Discounted vouchers | ~500 businesses across all categories | Login required |
+| **HiTech Zone PRO²** | Cashback + shop discounts | HTZone site purchases, PRO² Shop | Login required |
+| **Poalim Wonder** | Points → vouchers | Food chains, delivery, fashion, sports, gifts | Free signup |
+| **Gov Price Transparency** | Full price comparison | All major supermarket chains (XML, daily) | None |
+
+## Categories
+
+| Category | Hebrew | Stores |
+|----------|--------|--------|
+| supermarkets | רשתות מזון | שופרסל, רמי לוי, ויקטורי, קרפור, שוק העיר, יינות ביתן + more |
+| restaurants | מסעדות | ארומה, קפה לנדוור, קפה קפה, BBB, מוזס + more |
+| delivery | משלוחים | וולט, תן ביס, סיבוס |
+| pharma | פארם | סופר-פארם, ניופארם, גודפארם |
+| fashion | אופנה | קסטרו, פוקס, גולף, ורדינון, SOHO + more |
+| electronics | אלקטרוניקה | KSP, באג, איווורי, מחסני חשמל |
+| entertainment | בילויים | יס פלאנט, סינמה סיטי, פלאנט, לב סינמה |
+| gifts | מתנות | GiftZone, Love Gift Card, Dream Card |
+| home_kitchen | בית ומטבח | איקאה, אייס, הום סנטר, סלטם |
+| household_products | ניקיון | סנו |
+| travel | תיירות | איסתא, בוקינג, מלונות פתאל |
+| gym_sports | כושר | הולמס פלייס, דקטלון, מגה ספורט |
+| fuel | דלק | פז, סונול, דלק |
+| kids_baby | ילדים | שילב, טויס אר אס, בייבילנד |
 
 ## Architecture
 
@@ -29,129 +49,87 @@ Answers two questions:
 
 ```
 discounts.json
-├── Structural Layer (near-static)
-│   └── Which card/club covers which category
-│   └── Approximate % off
-│   └── Update: manually, quarterly
+├── Structural layer  — which source covers which category, max % off
+│                       near-static, update manually (quarterly)
 │
-└── Deal Layer (dynamic)
-    └── Specific voucher prices (e.g., Victory ₪300 → ₪259)
-    └── cached_at timestamp
-    └── Refresh: on-demand when stale (30-day TTL)
+└── Deal layer        — exact voucher prices (e.g. Victory ₪300 → ₪259)
+                        cached_at timestamp, 30-day TTL
+                        refreshed on-demand when stale
 ```
 
-**Why two layers?**
-- Structural data rarely changes — no need to scrape constantly
-- Deal prices change often — cache with TTL, refresh when needed
-- Fast responses from cache, accurate data when it matters
+**Why two layers?** Structural data (HTZone covers supermarkets at up to 20%) barely changes. Specific voucher prices drift monthly. Separating them means 80% of queries are answered from near-free static data; only live lookups cost extra.
 
-### On-Demand Enrichment
+### Token-Efficient Loading
 
-When a user asks about specific voucher prices:
-1. Check `cached_at` timestamp
-2. If null or >30 days old → mark as potentially stale
-3. If exact price needed → browser lookup → update cache → respond
-4. Subsequent requests served from cache
+The agent loads only the relevant category section, not the full KB:
 
-## Categories
+1. Read `quick_lookup.store_to_category` → identify category (~200 tokens)
+2. Read only that category + source metadata (~800–1,200 tokens)
 
-| Category | Hebrew | Example Stores |
-|----------|--------|----------------|
-| supermarkets | רשתות מזון | שופרסל, רמי לוי, ויקטורי |
-| restaurants | מסעדות | ארומה, קפה קפה, לנדוור |
-| delivery | משלוחים | וולט, תן ביס |
-| pharma | פארם | סופר-פארם, ניופארם |
-| fashion | אופנה | קסטרו, פוקס, זארה |
-| electronics | אלקטרוניקה | KSP, באג, איווורי |
-| entertainment | בילויים | יס פלאנט, סינמה סיטי |
-| travel | תיירות | איסתא, בוקינג |
-| home_renovation | ריהוט | איקאה, אייס |
-| gym_sports | כושר | הולמס פלייס |
-| fuel | דלק | פז, סונול |
-| kids_baby | ילדים | שילב, טויס אר אס |
+Result: ~75% fewer tokens vs loading the full file.
 
-## Usage
+### On-Demand Cache Refresh
 
-### Installation
+When `cached_at` is null or older than 30 days:
+1. Answer immediately from structural data (`max_pct`)
+2. If exact price needed → browser fetch → update `deals[]` + `cached_at` → save
+3. Next request served from cache
+
+## Installation
 
 Copy to your OpenClaw skills directory:
 
 ```bash
-cp -r ClawSavings ~/.openclaw/workspace/skills/clawsavings
+cp -r clawsavings ~/.openclaw/workspace/skills/clawsavings
 ```
 
-### Example Queries
+The skill is loaded automatically when the agent receives a discount-related query.
 
-**Hebrew (primary):**
-- "באיזה כרטיס כדאי לסופר-פארם?"
-- "איפה הכי זול לקנות חלב?"
-- "יש הנחות לוולט?"
-- "מה ההנחות בהייטקזון?"
+## Verified Deals (as of 2026-03-06)
 
-**English:**
-- "What's the best card for Super-Pharm?"
-- "Where's cheapest for groceries?"
-- "Any Wolt discounts?"
+A sample of the 24 verified Poalim Wonder deals in the KB:
 
-## Manual KB Updates
+| Store | Face Value | Price | Discount |
+|-------|-----------|-------|----------|
+| שוק העיר | ₪300 | ₪255 + 50pts | 15% |
+| ויקטורי | ₪300 | ₪259 + 50pts | 13.7% |
+| קרפור | ₪300 | ₪259 + 50pts | 13.7% |
+| רמי לוי | ₪700 | ₪620 + 50pts | 11.4% |
+| וולט | ₪100 | ₪80 + 25pts | 20% |
+| קסטרו | ₪150 | ₪109 + 25pts | 27.3% |
+| ורדינון | ₪100 | ₪65 + 25pts | 35% |
+| סלטם | ₪100 | ₪60 + 25pts | 40% |
+| מגה ספורט | ₪250 | ₪199 + 25pts | 20.4% |
+| SOHO | ₪200 | ₪149 + 50pts | 25.5% |
 
-### Update Structural Data (quarterly)
+## Updating the KB
 
-Edit `discounts.json` and update:
-- `max_pct` values when card benefits change
-- `stores` arrays when new chains open
-- `sources` when new discount programs launch
+### Quarterly (structural layer)
+Check if HTZone or Poalim Wonder benefit structure changed. Update `max_pct` and `last_reviewed`.
 
-### Update Deal Prices
-
+### On-demand (deal layer)
 ```bash
-# Run refresh script (requires browser automation)
 python scripts/refresh_deals.py --source poalim_wonder
-
-# Or manually edit discounts.json:
-# 1. Find the source in the category
-# 2. Update deals array with current prices
-# 3. Set cached_at to today's date
 ```
+Or manually edit `discounts.json`: update `deals[]` array and set `cached_at` to today.
 
-## Future Plans
+## Roadmap
 
-### Gov XML Price Integration
-
-Full product-level price comparison via mandatory government transparency data:
-- Scraper: https://github.com/OpenIsraeliSupermarkets/israeli-supermarket-scarpers
-- Covers: Shufersal, Rami Levy, Victory, Yeinot Bitan, Mega, Carrefour, etc.
-- **No auth needed** — fully open data
-
-Implementation:
-1. Set up daily XML scrape job
-2. Index products by barcode
-3. Query: "where's cheapest for [product]" → return ranked store prices
-
-### Browser Automation for Deal Refresh
-
-Automated refresh for login-required sources:
-- Store htzone/poalim credentials securely
-- Periodic scrape of voucher pages
-- Update deal layer automatically
+- **Gov XML price integration** — product-level price comparison via [OpenIsraeliSupermarkets](https://github.com/OpenIsraeliSupermarkets/israeli-supermarket-scarpers)
+- **HTZone deal automation** — browser refresh with saved session
+- **Max / Isracard** — expand coverage to remaining major card programs
 
 ## File Structure
 
 ```
 clawsavings/
-├── SKILL.md          # Agent instructions
-├── discounts.json    # Knowledge base
-├── README.md         # This file
+├── SKILL.md              # Agent instructions + decision logic
+├── discounts.json        # Knowledge base (structural + deal layers)
+├── header.jpg            # Cover image
+├── README.md             # This file
 └── scripts/
-    └── refresh_deals.py  # Deal refresh automation (stub)
+    └── refresh_deals.py  # Deal refresh automation
 ```
-
-## Contributing
-
-1. Fork the repo
-2. Update KB with new deals/sources
-3. Test with sample queries
-4. PR with description of changes
 
 ## License
 
