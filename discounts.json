@@ -276,14 +276,15 @@
           "deals": [
             {
               "store": "YOLO",
-              "face_value": null,
-              "price": null,
+              "face_value": 150,
+              "price": 119,
               "webview_url": "https://www.htzone.co.il/webview/101900/YOLO/",
-              "cached_at": null,
-              "notes": "face value + price need browser fetch (PRO² only)"
+              "cached_at": "2026-03-07",
+              "notes": "face value + price need browser fetch (PRO² only)",
+              "effective_pct": 20.7
             }
           ],
-          "cached_at": null
+          "cached_at": "2026-03-07"
         }
       }
     },
@@ -487,7 +488,24 @@
           "max_pct": 20,
           "voucher_url": "https://www.htzone.co.il/sale/1147",
           "verified_url": true,
-          "deals": [],
+          "deals": [
+            {
+              "store": "טרמינל X",
+              "face_value": 300,
+              "price": 279,
+              "effective_pct": 7.0,
+              "cached_at": "2026-03-07",
+              "notes": "scraped from HTZone webview"
+            },
+            {
+              "store": "נעלי נמרוד",
+              "face_value": 250,
+              "price": 235,
+              "effective_pct": 6.0,
+              "cached_at": "2026-03-07",
+              "notes": "scraped from HTZone webview"
+            }
+          ],
           "cached_at": null
         },
         "poalim_wonder": {
@@ -563,19 +581,21 @@
               "store": "טרמינל X",
               "store_en": "Terminal X",
               "face_value": 300,
-              "price": null,
+              "price": 259,
               "webview_url": "https://www.htzone.co.il/webview/131850/TERMINAL-X---%D7%A9%D7%95%D7%91%D7%A8-%D7%9B%D7%A1%D7%A4%D7%99-%D7%91%D7%A9%D7%95%D7%95%D7%99-300-%E2%82%AA/",
-              "cached_at": null,
-              "notes": "price needs browser fetch (PRO² only)"
+              "cached_at": "2026-03-07",
+              "notes": "price needs browser fetch (PRO² only)",
+              "effective_pct": 13.7
             },
             {
               "store": "נעלי נמרוד",
               "store_en": "Naale Nimrod",
               "face_value": 250,
-              "price": null,
+              "price": 215,
               "webview_url": "https://www.htzone.co.il/webview/112494/%D7%A9%D7%95%D7%91%D7%A8-%D7%9C%D7%A8%D7%A9%D7%AA-%D7%A0%D7%A2%D7%9C%D7%99-%D7%A0%D7%9E%D7%A8%D7%95%D7%93-%D7%91%D7%A9%D7%95%D7%95%D7%99-250-%E2%82%AA/",
-              "cached_at": null,
-              "notes": "price needs browser fetch (PRO² only)"
+              "cached_at": "2026-03-07",
+              "notes": "price needs browser fetch (PRO² only)",
+              "effective_pct": 14.0
             }
           ],
           "cached_at": "2026-03-07"
@@ -778,7 +798,16 @@
           "type": "voucher",
           "voucher_url": "https://www.htzone.co.il/sale/1147",
           "verified_url": true,
-          "deals": [],
+          "deals": [
+            {
+              "store": "הום סנטר",
+              "face_value": 300,
+              "price": 280,
+              "effective_pct": 6.7,
+              "cached_at": "2026-03-07",
+              "notes": "scraped from HTZone webview"
+            }
+          ],
           "cached_at": null
         },
         "poalim_wonder": {
@@ -806,13 +835,14 @@
               "store": "הום סנטר",
               "store_en": "Home Center",
               "face_value": 300,
-              "price": null,
+              "price": 255,
               "webview_url": "https://www.htzone.co.il/webview/124611/%D7%94%D7%95%D7%9D-%D7%A1%D7%A0%D7%98%D7%A8---%D7%A9%D7%95%D7%91%D7%A8-300-%E2%82%AA/",
-              "cached_at": null,
-              "notes": "price needs browser fetch (PRO² only)"
+              "cached_at": "2026-03-07",
+              "notes": "price needs browser fetch (PRO² only)",
+              "effective_pct": 15.0
             }
           ],
-          "cached_at": null
+          "cached_at": "2026-03-07"
         }
       }
     },
@@ -1012,17 +1042,18 @@
       "sources": {
         "htzone_pro2": {
           "type": "voucher",
-          "cached_at": null,
+          "cached_at": "2026-03-07",
           "notes": "PRO²-only — no discount for regular HTZone members",
           "deals": [
             {
               "store": "קרביץ",
               "store_en": "Kravitz",
               "face_value": 250,
-              "price": null,
+              "price": 199,
               "webview_url": "https://www.htzone.co.il/webview/83676/%D7%A9%D7%95%D7%91%D7%A8-%D7%9C%D7%A8%D7%A9%D7%AA-%D7%A7%D7%A8%D7%91%D7%99%D7%A5-%D7%91%D7%A9%D7%95%D7%95%D7%99-250-%E2%82%AA/",
-              "cached_at": null,
-              "notes": "price needs browser fetch (PRO² only)"
+              "cached_at": "2026-03-07",
+              "notes": "price needs browser fetch (PRO² only)",
+              "effective_pct": 20.4
             }
           ]
         }
