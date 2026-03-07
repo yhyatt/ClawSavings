@@ -424,6 +424,10 @@
           "name": "Naale Nimrod",
           "he": "נעלי נמרוד",
           "note": "shoe chain"
+        },
+        {
+          "he": "שילב",
+          "en": "Shilav"
         }
       ],
       "sources": {
@@ -511,6 +515,28 @@
               "price": 150,
               "extra_points": 25,
               "effective_pct": null
+            },
+            {
+              "store": "שילב",
+              "store_en": "Shilav",
+              "face_value": 150,
+              "price": 100,
+              "effective_pct": 33.3,
+              "benefit_id": 441,
+              "benefit_url": "https://links.bankhapoalim.co.il/wonder/benefit/441",
+              "cached_at": "2026-03-07",
+              "notes": ""
+            },
+            {
+              "store": "טרמינל X",
+              "store_en": "Terminal X",
+              "face_value": 300,
+              "price": 260,
+              "effective_pct": 13.3,
+              "benefit_id": 5867,
+              "benefit_url": "https://links.bankhapoalim.co.il/wonder/benefit/5867",
+              "cached_at": "2026-03-07",
+              "notes": ""
             }
           ],
           "cached_at": "2026-03-07"
@@ -627,6 +653,14 @@
         {
           "name": "Cinematheque TLV",
           "he": "סינמטק תל אביב"
+        },
+        {
+          "he": "סקיי ג'אמפ",
+          "en": "Sky Jump"
+        },
+        {
+          "he": "ספארי",
+          "en": "Safari"
         }
       ],
       "sources": {
@@ -641,6 +675,39 @@
               "description": "זוג כרטיסים לסרט — כל ימות השבוע",
               "price": 45,
               "extra_points": 25
+            },
+            {
+              "store": "לב סינמה",
+              "store_en": "Lev Cinema",
+              "face_value": null,
+              "price": 45,
+              "effective_pct": null,
+              "benefit_id": 4426,
+              "benefit_url": "https://links.bankhapoalim.co.il/wonder/benefit/4426",
+              "cached_at": "2026-03-07",
+              "notes": "2 tickets for ₪45"
+            },
+            {
+              "store": "סקיי ג'אמפ",
+              "store_en": "Sky Jump",
+              "face_value": null,
+              "price": 45,
+              "effective_pct": null,
+              "benefit_id": 4685,
+              "benefit_url": "https://links.bankhapoalim.co.il/wonder/benefit/4685",
+              "cached_at": "2026-03-07",
+              "notes": "single ticket"
+            },
+            {
+              "store": "ספארי",
+              "store_en": "Safari",
+              "face_value": null,
+              "price": 75,
+              "effective_pct": null,
+              "benefit_id": 5979,
+              "benefit_url": "https://links.bankhapoalim.co.il/wonder/benefit/5979",
+              "cached_at": "2026-03-07",
+              "notes": "single ticket"
             }
           ]
         },
@@ -927,6 +994,16 @@
               "price": 250,
               "extra_points": 25,
               "effective_pct": null
+            },
+            {
+              "store": "פעלטון",
+              "store_en": "Pealton",
+              "face_value": null,
+              "price": 44,
+              "effective_pct": null,
+              "cached_at": "2026-03-07",
+              "notes": "single ticket",
+              "benefit_id": 5986
             }
           ],
           "cached_at": "2026-03-07"
@@ -985,6 +1062,24 @@
           "verified_url": true,
           "deals": [],
           "cached_at": null
+        },
+        "poalim_wonder": {
+          "type": "voucher",
+          "verified": true,
+          "verified_at": "2026-03-07",
+          "deals": [
+            {
+              "store": "טויס אר אס",
+              "store_en": "Toys R Us",
+              "face_value": 150,
+              "price": 115,
+              "effective_pct": 23.3,
+              "benefit_id": 5734,
+              "benefit_url": "https://links.bankhapoalim.co.il/wonder/benefit/5734",
+              "cached_at": "2026-03-07",
+              "notes": ""
+            }
+          ]
         }
       }
     },
@@ -1012,6 +1107,56 @@
               "cached_at": "2026-03-07",
               "notes": "price needs browser fetch (PRO² only)",
               "effective_pct": 20.4
+            }
+          ]
+        },
+        "poalim_wonder": {
+          "type": "voucher",
+          "verified": true,
+          "verified_at": "2026-03-07",
+          "deals": [
+            {
+              "store": "קרביץ",
+              "store_en": "Kravitz",
+              "face_value": 200,
+              "price": 175,
+              "effective_pct": 12.5,
+              "benefit_id": 5933,
+              "benefit_url": "https://links.bankhapoalim.co.il/wonder/benefit/5933",
+              "cached_at": "2026-03-07",
+              "notes": ""
+            }
+          ]
+        }
+      }
+    },
+    "books_culture": {
+      "name": {
+        "he": "ספרים ותרבות",
+        "en": "Books & Culture"
+      },
+      "stores": [
+        {
+          "he": "סטימצקי",
+          "en": "Steimatzky"
+        }
+      ],
+      "sources": {
+        "poalim_wonder": {
+          "type": "voucher",
+          "verified": true,
+          "verified_at": "2026-03-07",
+          "deals": [
+            {
+              "store": "סטימצקי",
+              "store_en": "Steimatzky",
+              "face_value": 50,
+              "price": 29,
+              "effective_pct": 42.0,
+              "benefit_id": 6346,
+              "benefit_url": "https://links.bankhapoalim.co.il/wonder/benefit/6346",
+              "cached_at": "2026-03-07",
+              "notes": ""
             }
           ]
         }
