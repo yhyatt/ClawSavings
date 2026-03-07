@@ -122,73 +122,23 @@
           "source_url": "https://www.bankhapoalim.co.il/he/Poalim-Wonder",
           "deals": [
             {
-              "store": "שוק העיר",
-              "store_en": "Shuk HaIr",
-              "face_value": 300,
-              "price": 255,
+              "store": "קרפור: שובר בשווי 300 ₪",
+              "description": null,
+              "face_value": null,
+              "price": 300,
               "extra_points": 50,
-              "effective_pct": 15.0
+              "effective_pct": null
             },
             {
-              "store": "ויקטורי",
-              "store_en": "Victory",
-              "face_value": 300,
-              "price": 259,
+              "store": "התו המלא מבית רמי לוי",
+              "description": null,
+              "face_value": null,
+              "price": 700,
               "extra_points": 50,
-              "effective_pct": 13.7
-            },
-            {
-              "store": "קרפור",
-              "store_en": "Carrefour",
-              "face_value": 300,
-              "price": 259,
-              "extra_points": 50,
-              "effective_pct": 13.7
-            },
-            {
-              "store": "קרפור",
-              "store_en": "Carrefour",
-              "face_value": 500,
-              "price": 465,
-              "extra_points": 0,
-              "effective_pct": 7.0,
-              "notes": "חבילה גדולה"
-            },
-            {
-              "store": "רמי לוי",
-              "store_en": "Rami Levy",
-              "face_value": 600,
-              "price": 575,
-              "extra_points": 0,
-              "effective_pct": 4.2
-            },
-            {
-              "store": "רמי לוי",
-              "store_en": "Rami Levy",
-              "face_value": 700,
-              "price": 620,
-              "extra_points": 50,
-              "effective_pct": 11.4,
-              "notes": "חבילה גדולה — עדיפה!"
-            },
-            {
-              "store": "נוי השדה",
-              "store_en": "Noi HaSadeh",
-              "face_value": 100,
-              "price": 79,
-              "extra_points": 50,
-              "effective_pct": 21.0,
-              "notes": "מוצרי חקלאות ישראלית"
-            },
-            {
-              "store": "קשת טעמים",
-              "store_en": "Keshet Taamim",
-              "face_value": 200,
-              "price": 175,
-              "extra_points": 50,
-              "effective_pct": 12.5
+              "effective_pct": null
             }
-          ]
+          ],
+          "cached_at": "2026-03-07"
         },
         "gov_xml": {
           "type": "price_comparison",
@@ -516,53 +466,54 @@
           "deals": [
             {
               "store": "קסטרו",
-              "store_en": "Castro",
-              "face_value": 150,
-              "price": 109,
+              "description": null,
+              "face_value": null,
+              "price": 150,
               "extra_points": 25,
-              "effective_pct": 27.3
+              "effective_pct": null
             },
             {
               "store": "SOHO",
-              "face_value": 200,
-              "price": 149,
+              "description": null,
+              "face_value": null,
+              "price": 200,
               "extra_points": 50,
-              "effective_pct": 25.5
+              "effective_pct": null
             },
             {
-              "store": "כיתן",
-              "store_en": "Kitan",
-              "face_value": 150,
-              "price": 109,
+              "store": "רשת ורדינון",
+              "description": null,
+              "face_value": null,
+              "price": 100,
               "extra_points": 25,
-              "effective_pct": 27.3
+              "effective_pct": null
             },
             {
-              "store": "גולף קידס",
-              "store_en": "Golf Kids",
-              "face_value": 150,
-              "price": 109,
+              "store": "רשת KITAN",
+              "description": null,
+              "face_value": null,
+              "price": 150,
               "extra_points": 25,
-              "effective_pct": 27.3
+              "effective_pct": null
             },
             {
-              "store": "אינטימה",
-              "store_en": "Intima",
-              "face_value": 150,
-              "price": 109,
+              "store": "GOLF KIDS",
+              "description": null,
+              "face_value": null,
+              "price": 150,
               "extra_points": 25,
-              "effective_pct": 27.3
+              "effective_pct": null
             },
             {
-              "store": "ורדינון",
-              "store_en": "Vardinon",
-              "face_value": 100,
-              "price": 65,
+              "store": "רשת INTIMA",
+              "description": null,
+              "face_value": null,
+              "price": 150,
               "extra_points": 25,
-              "effective_pct": 35.0,
-              "notes": "מצעים וטקסטיל"
+              "effective_pct": null
             }
-          ]
+          ],
+          "cached_at": "2026-03-07"
         },
         "htzone_pro2": {
           "type": "voucher",
@@ -739,33 +690,38 @@
           "deals": [
             {
               "store": "GiftZone",
-              "face_value": 100,
-              "price": 75,
+              "description": null,
+              "face_value": null,
+              "price": 100,
               "extra_points": 50,
-              "effective_pct": 25.0
+              "effective_pct": null
             },
             {
-              "store": "Love Gift Card",
-              "face_value": 150,
-              "price": 109,
+              "store": "LOVE GIFT CARD",
+              "description": null,
+              "face_value": null,
+              "price": 150,
               "extra_points": 25,
-              "effective_pct": 27.3
+              "effective_pct": null
             },
             {
-              "store": "Dream Card",
-              "face_value": 150,
-              "price": 109,
+              "store": "DREAM CARD",
+              "description": null,
+              "face_value": null,
+              "price": 150,
               "extra_points": 25,
-              "effective_pct": 27.3
+              "effective_pct": null
             },
             {
-              "store": "Gifta",
-              "face_value": 200,
-              "price": 180,
+              "store": "Gifta- כל מה שצריך במתנה",
+              "description": null,
+              "face_value": null,
+              "price": 200,
               "extra_points": 25,
-              "effective_pct": 10.0
+              "effective_pct": null
             }
-          ]
+          ],
+          "cached_at": "2026-03-07"
         }
       }
     },
@@ -817,15 +773,15 @@
           "source_url": "https://www.bankhapoalim.co.il/he/Poalim-Wonder/Shopping",
           "deals": [
             {
-              "store": "סלטם",
-              "store_en": "Soltam",
-              "face_value": 100,
-              "price": 60,
+              "store": "רשת SOLTAM",
+              "description": null,
+              "face_value": null,
+              "price": 100,
               "extra_points": 25,
-              "effective_pct": 40.0,
-              "notes": "כלי בישול"
+              "effective_pct": null
             }
-          ]
+          ],
+          "cached_at": "2026-03-07"
         },
         "htzone_pro2": {
           "type": "voucher",
@@ -867,13 +823,14 @@
           "deals": [
             {
               "store": "סנו עד הבית",
-              "store_en": "Sano",
-              "face_value": 150,
-              "price": 120,
+              "description": null,
+              "face_value": null,
+              "price": 150,
               "extra_points": 50,
-              "effective_pct": 20.0
+              "effective_pct": null
             }
-          ]
+          ],
+          "cached_at": "2026-03-07"
         }
       }
     },
@@ -964,14 +921,15 @@
           "source_url": "https://www.bankhapoalim.co.il/he/Poalim-Wonder/Shopping",
           "deals": [
             {
-              "store": "מגה ספורט",
-              "store_en": "Mega Sport",
-              "face_value": 250,
-              "price": 199,
+              "store": "רשת מגה ספורט",
+              "description": null,
+              "face_value": null,
+              "price": 250,
               "extra_points": 25,
-              "effective_pct": 20.4
+              "effective_pct": null
             }
-          ]
+          ],
+          "cached_at": "2026-03-07"
         }
       }
     },

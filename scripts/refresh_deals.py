@@ -75,12 +75,15 @@ def scroll_to_bottom(page, pause_ms=800, max_scrolls=30):
     """Scroll page to bottom to trigger lazy-loaded content."""
     prev_height = 0
     for _ in range(max_scrolls):
-        page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
-        page.wait_for_timeout(pause_ms)
-        new_height = page.evaluate("document.body.scrollHeight")
-        if new_height == prev_height:
+        try:
+            page.evaluate("window.scrollTo(0, document.documentElement.scrollHeight || document.body.scrollHeight)")
+            page.wait_for_timeout(pause_ms)
+            new_height = page.evaluate("document.documentElement.scrollHeight || document.body.scrollHeight")
+            if new_height == prev_height:
+                break
+            prev_height = new_height
+        except Exception:
             break
-        prev_height = new_height
 
 
 def parse_shekel(text):
@@ -123,7 +126,14 @@ WONDER_STORE_MAP = {
     "ורדינון":       ("fashion",            "poalim_wonder"),
     "סלטם":          ("home_kitchen",       "poalim_wonder"),
     "מגה ספורט":     ("gym_sports",         "poalim_wonder"),
+    "MEGA SPORT":    ("gym_sports",         "poalim_wonder"),
     "סנו":           ("household_products", "poalim_wonder"),
+    "SOLTAM":        ("home_kitchen",       "poalim_wonder"),
+    "סולטם":         ("home_kitchen",       "poalim_wonder"),
+    "KITAN":         ("fashion",            "poalim_wonder"),
+    "כיתן":          ("fashion",            "poalim_wonder"),
+    "GOLF KIDS":     ("fashion",            "poalim_wonder"),
+    "INTIMA":        ("fashion",            "poalim_wonder"),
     "GiftZone":      ("gifts_gift_cards",   "poalim_wonder"),
     "LOVE GIFT CARD":("gifts_gift_cards",   "poalim_wonder"),
     "DREAM CARD":    ("gifts_gift_cards",   "poalim_wonder"),
@@ -146,6 +156,7 @@ def scrape_wonder_page(page, url, page_name):
     """Scrape all deal cards from a Poalim Wonder sub-page."""
     print(f"   🌐 Loading Wonder/{page_name}...")
     page.goto(url, wait_until="networkidle", timeout=30000)
+    page.wait_for_timeout(3000)  # Drupal JS hydration
     scroll_to_bottom(page)
 
     deals_raw = []
@@ -163,8 +174,16 @@ def scrape_wonder_page(page, url, page_name):
         ".card",
     ]
 
+    # Verified selector (2026-03-07): Poalim Wonder uses Drupal "team-member" template
+    # Primary: div.team-member.with-img (each card = one deal)
+    # Fallback: generic selectors, then full-text parse
+    WONDER_CARD_SELECTORS = [
+        "div.team-member.with-img",   # verified ✅
+        "div.team-member",
+    ] + card_selectors
+
     cards = []
-    for sel in card_selectors:
+    for sel in WONDER_CARD_SELECTORS:
         found = page.query_selector_all(sel)
         if len(found) > 3:
             print(f"   📦 Found {len(found)} cards with selector: {sel}")
@@ -177,8 +196,16 @@ def scrape_wonder_page(page, url, page_name):
         return _parse_wonder_text(page.inner_text("body"))
 
     for card in cards:
-        text = card.inner_text()
-        deal = _parse_wonder_card_text(text)
+        # Try to extract store name and subtitle separately for cleaner parsing
+        subtitle_el = card.query_selector("div.team-member-subtitle, .team-member-subtitle")
+        if subtitle_el:
+            # Get store name = full card text minus the subtitle
+            full_text = card.inner_text().strip()
+            subtitle_text = subtitle_el.inner_text().strip()
+            store_name = full_text.replace(subtitle_text, "").strip().splitlines()[0].strip()
+            deal = _parse_wonder_card_text(f"{store_name}\n{subtitle_text}")
+        else:
+            deal = _parse_wonder_card_text(card.inner_text())
         if deal:
             deals_raw.append(deal)
 
