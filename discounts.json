@@ -1,7 +1,7 @@
 {
-  "version": "0.2.0",
+  "version": "1.2.0",
   "last_reviewed": "2026-03-07",
-  "notes": "Verified against live websites 2026-03-06. HTZone deal pages require login/JS to render specifics — structural max_pct values confirmed from public pages. Poalim Wonder deals fully scraped from public pages.",
+  "notes": "Verified against live websites 2026-03-07. HTZone deal pages require login/JS to render specifics — structural max_pct values confirmed from public pages. Poalim Wonder deals fully scraped from public pages.",
   "sources": {
     "htzone_card": {
       "name": "HiTech Zone Cal Card",
@@ -239,10 +239,6 @@
         {
           "name": "YOLO",
           "he": "YOLO"
-        },
-        {
-          "name": "Kravitz",
-          "he": "קרביץ"
         }
       ],
       "sources": {
@@ -279,23 +275,15 @@
           "notes": "PRO² webview vouchers — no discount for regular HTZone members",
           "deals": [
             {
-              "store": "קרביץ",
-              "store_en": "Kravitz",
-              "face_value": 250,
-              "price": null,
-              "webview_url": "https://www.htzone.co.il/webview/83676/%D7%A9%D7%95%D7%91%D7%A8-%D7%9C%D7%A8%D7%A9%D7%AA-%D7%A7%D7%A8%D7%91%D7%99%D7%A5-%D7%91%D7%A9%D7%95%D7%95%D7%99-250-%E2%82%AA/",
-              "cached_at": null,
-              "note": "price needs browser fetch (PRO² only)"
-            },
-            {
               "store": "YOLO",
               "face_value": null,
               "price": null,
               "webview_url": "https://www.htzone.co.il/webview/101900/YOLO/",
               "cached_at": null,
-              "note": "face value + price need browser fetch (PRO² only)"
+              "notes": "face value + price need browser fetch (PRO² only)"
             }
-          ]
+          ],
+          "cached_at": null
         }
       }
     },
@@ -355,9 +343,10 @@
               "effective_pct": 12.9,
               "webview_url": "https://www.htzone.co.il/webview/149795/%D7%9B%D7%A8%D7%9E%D7%9C%D7%94/",
               "cached_at": "2026-03-07",
-              "note": "online-only, min order ₪199, delivery ₪30"
+              "notes": "online-only, min order ₪199, delivery ₪30"
             }
-          ]
+          ],
+          "cached_at": "2026-03-07"
         }
       }
     },
@@ -411,7 +400,8 @@
               "webview_url": "https://www.htzone.co.il/webview/110366/GOOD-PHARM/",
               "cached_at": "2026-03-07"
             }
-          ]
+          ],
+          "cached_at": "2026-03-07"
         }
       }
     },
@@ -567,7 +557,7 @@
               "effective_pct": 10.0,
               "webview_url": "https://www.htzone.co.il/webview/118758/%D7%A9%D7%95%D7%91%D7%A8-%D7%91%D7%A9%D7%95%D7%95%D7%99-100-%E2%82%AA-%D7%9C%D7%9E%D7%99%D7%9E%D7%95%D7%A9-%D7%91%D7%A8%D7%A9%D7%AA-B%D7%92%D7%95%D7%93/",
               "cached_at": "2026-03-07",
-              "note": "in-store only, includes sale stacking"
+              "notes": "in-store only, includes sale stacking"
             },
             {
               "store": "טרמינל X",
@@ -576,7 +566,7 @@
               "price": null,
               "webview_url": "https://www.htzone.co.il/webview/131850/TERMINAL-X---%D7%A9%D7%95%D7%91%D7%A8-%D7%9B%D7%A1%D7%A4%D7%99-%D7%91%D7%A9%D7%95%D7%95%D7%99-300-%E2%82%AA/",
               "cached_at": null,
-              "note": "price needs browser fetch (PRO² only)"
+              "notes": "price needs browser fetch (PRO² only)"
             },
             {
               "store": "נעלי נמרוד",
@@ -585,9 +575,10 @@
               "price": null,
               "webview_url": "https://www.htzone.co.il/webview/112494/%D7%A9%D7%95%D7%91%D7%A8-%D7%9C%D7%A8%D7%A9%D7%AA-%D7%A0%D7%A2%D7%9C%D7%99-%D7%A0%D7%9E%D7%A8%D7%95%D7%93-%D7%91%D7%A9%D7%95%D7%95%D7%99-250-%E2%82%AA/",
               "cached_at": null,
-              "note": "price needs browser fetch (PRO² only)"
+              "notes": "price needs browser fetch (PRO² only)"
             }
-          ]
+          ],
+          "cached_at": "2026-03-07"
         }
       }
     },
@@ -818,9 +809,10 @@
               "price": null,
               "webview_url": "https://www.htzone.co.il/webview/124611/%D7%94%D7%95%D7%9D-%D7%A1%D7%A0%D7%98%D7%A8---%D7%A9%D7%95%D7%91%D7%A8-300-%E2%82%AA/",
               "cached_at": null,
-              "note": "price needs browser fetch (PRO² only)"
+              "notes": "price needs browser fetch (PRO² only)"
             }
-          ]
+          ],
+          "cached_at": null
         }
       }
     },
@@ -931,7 +923,7 @@
           "verified_url": true,
           "deals": [],
           "cached_at": null,
-          "webview_urls": {
+          "item_urls": {
             "פעלטון": "https://www.htzone.co.il/item/92331/pealton---%D7%A8%D7%A9%D7%AA-%D7%9E%D7%A9%D7%97%D7%A7%D7%99%D7%95%D7%AA-%D7%A4%D7%A2%D7%9C%D7%98%D7%95%D7%9F/"
           }
         },
@@ -1005,6 +997,34 @@
           "verified_url": true,
           "deals": [],
           "cached_at": null
+        }
+      }
+    },
+    "office_stationery": {
+      "he": "ספרים, ציוד משרדי ומחשבים",
+      "stores": [
+        {
+          "name": "Kravitz",
+          "he": "קרביץ",
+          "note": "office supplies & stationery chain"
+        }
+      ],
+      "sources": {
+        "htzone_pro2": {
+          "type": "voucher",
+          "cached_at": null,
+          "notes": "PRO²-only — no discount for regular HTZone members",
+          "deals": [
+            {
+              "store": "קרביץ",
+              "store_en": "Kravitz",
+              "face_value": 250,
+              "price": null,
+              "webview_url": "https://www.htzone.co.il/webview/83676/%D7%A9%D7%95%D7%91%D7%A8-%D7%9C%D7%A8%D7%A9%D7%AA-%D7%A7%D7%A8%D7%91%D7%99%D7%A5-%D7%91%D7%A9%D7%95%D7%95%D7%99-250-%E2%82%AA/",
+              "cached_at": null,
+              "notes": "price needs browser fetch (PRO² only)"
+            }
+          ]
         }
       }
     }
@@ -1084,7 +1104,7 @@
       "טויס אר אס": "kids_baby",
       "בייבילנד": "kids_baby",
       "YOLO": "restaurants",
-      "קרביץ": "restaurants",
+      "קרביץ": "office_stationery",
       "כרמלה": "delivery",
       "Bגוד": "fashion",
       "טרמינל X": "fashion",
@@ -1092,7 +1112,8 @@
       "נעלי נמרוד": "fashion",
       "פעלטון": "gym_sports",
       "סינמטק": "entertainment",
-      "סינמטק תל אביב": "entertainment"
+      "סינמטק תל אביב": "entertainment",
+      "Kravitz": "office_stationery"
     },
     "best_sources_by_category": {
       "supermarkets": [
@@ -1154,6 +1175,9 @@
       ],
       "kids_baby": [
         "htzone_club"
+      ],
+      "office_stationery": [
+        "htzone_pro2"
       ]
     }
   },
