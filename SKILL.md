@@ -17,7 +17,7 @@ Activate when the user asks about:
 
 ## Loading the Knowledge Base — LOAD ONLY WHAT YOU NEED
 
-The full `discounts.json` is ~20KB. **Do not load the whole file.**  
+The full `discounts.json` is in the skill directory (same folder as this SKILL.md). It is ~20KB. **Do not load the whole file.**  
 Instead, use targeted extraction to keep token cost minimal.
 
 ### Step 1 — Identify the category (always first)
@@ -25,7 +25,7 @@ Instead, use targeted extraction to keep token cost minimal.
 ```bash
 python3 -c "
 import json
-d = json.load(open('~/.openclaw/workspace/skills/clawsavings/discounts.json'))
+d = json.load(open('discounts.json'))
 store = 'שם_החנות'  # replace with the queried store
 cat = d['quick_lookup']['store_to_category'].get(store)
 best = d['quick_lookup']['best_sources_by_category'].get(cat, [])
@@ -41,7 +41,7 @@ Cost: reads only `quick_lookup` — ~200 tokens total.
 ```bash
 python3 -c "
 import json
-d = json.load(open('~/.openclaw/workspace/skills/clawsavings/discounts.json'))
+d = json.load(open('discounts.json'))
 cat = 'supermarkets'  # from step 1
 out = {
     'category_data': d['categories'][cat],
@@ -126,7 +126,7 @@ Load category → list all sources → explain the best combo (e.g. "buy a Poali
 ```bash
 python3 -c "
 import json
-path = '~/.openclaw/workspace/skills/clawsavings/discounts.json'
+path = 'discounts.json'
 d = json.load(open(path))
 from datetime import date
 d['categories']['CATEGORY']['sources']['SOURCE']['deals'] = [/* new deals */]
