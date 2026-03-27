@@ -26,6 +26,7 @@ Sources without login:
 
 import argparse
 import json
+import logging
 import os
 import re
 import sys
@@ -34,6 +35,7 @@ from pathlib import Path
 
 KB_PATH = Path(__file__).parent.parent / "discounts.json"
 TODAY = date.today().isoformat()
+logger = logging.getLogger(__name__)
 
 
 # ─── KB helpers ──────────────────────────────────────────────────────────────
@@ -82,7 +84,8 @@ def scroll_to_bottom(page, pause_ms=800, max_scrolls=30):
             if new_height == prev_height:
                 break
             prev_height = new_height
-        except Exception:
+        except Exception as e:
+            logger.warning("scroll_to_bottom error (stopping scroll): %s", e)
             break
 
 

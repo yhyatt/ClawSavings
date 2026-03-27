@@ -59,8 +59,10 @@ def load_wallet():
 
 def save_wallet(w):
     w["last_updated"] = str(date.today())
-    with open(WALLET_PATH, "w") as f:
+    tmp = WALLET_PATH + ".tmp"
+    with open(tmp, "w") as f:
         json.dump(w, f, ensure_ascii=False, indent=2)
+    os.replace(tmp, WALLET_PATH)
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
